@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY ./Code_for_ML.ipynb /code/Code_for_ML.ipynb
 
-COPY ./main.ipynb /code/main.ipynb
+COPY ./main.py /code/main.py
 
 COPY ./data_usaha.csv /code/data_usaha.csv
 
