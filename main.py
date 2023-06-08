@@ -392,33 +392,3 @@ async def run_server():
 
 if __name__ == "__main__":
     asyncio.run(run_server())
-
-
-# In[ ]:
-
-
-#CARA INPUT DATA DI FIRESTORE 
-
-collection_ref = db.collection("users")
-document_ref = collection_ref.document()
-
-# Buat data yang ingin Anda kirim ke Firestore
-datainput = {
-      'skala_usaha': 'Mikro', 'modal_usaha': '3-5 JT', 
-    'bidang_usaha': 'Pertanian dan perkebunan', 
-    'omset_usaha': '5-10 JT', 'usia_targetpelanggan': [ ' 40-59 tahun', ' >60 tahun'], 
-    'gender_targetpelanggan': [' Perempuan'], 
-    'pekerjaan_targetpelanggan': [' IRT'], 
-    'status_targetpelanggan': ['Kelas atas'], 
-    'jenis_lokasi_': ['Pusat Kota dan Keramaian']}
-
-# Kirim data ke Firestore
-document_ref.set(datainput)
-print("Data berhasil dikirim ke Firestore, ")
-
-
-# In[ ]:
-
-
-
-
