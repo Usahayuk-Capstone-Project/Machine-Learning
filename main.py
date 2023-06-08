@@ -386,12 +386,12 @@ import uvicorn
 import asyncio
 
 async def run_server():
-    if __name__ == "__main__":
-        config = uvicorn.Config(app)
-        server = uvicorn.Server(config)
-        await server.serve()
+    config = uvicorn.Config(app)
+    server = uvicorn.Server(config)
+    await server.serve()
 
-asyncio.run(run_server())
+if __name__ == "__main__":
+    asyncio.run(run_server())
 
 # In[ ]:
 
