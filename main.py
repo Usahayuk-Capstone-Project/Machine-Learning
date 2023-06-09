@@ -218,7 +218,7 @@ def getSimilarityMatrix():
 #FUNCTION FOR GET RECOMMENDATION 
 def getRecommendation(cekid):
     
-    usaha_index = new_df[new_df['user_id'] == 'nan'].index[0]
+    usaha_index = new_df[new_df['user_id'] == ''].index[0]
     similarity = getSimilarityMatrix()
     distances = similarity[usaha_index]
     usaha_list = sorted(list(enumerate(distances)),reverse=True, key=lambda x:x[1])[1:6]
@@ -247,64 +247,56 @@ def getRecommendation(cekid):
     """
 
 
-# In[7]:
+# In[129]:
 
+df, new_df, users = extract_DF_from_firestore()
 
 import logging
 
 def to_getID():
-    # Dapatkan referensi koleksi yang ingin Anda cari
+    # Get the reference to the collection you want to query
     collection_ref = db.collection('users')
 
-    # Item data yang diketahui
-    user_id = df['user_id'].iloc[-1]
-    jenis_usaha = df['jenis_usaha'].iloc[-1]
-    skala_usaha = df['skala_usaha'].iloc[-1]
-    modal_usaha = df['modal_usaha'].iloc[-1]
-    bidang_usaha = df['bidang_usaha'].iloc[-1]
-    omset_usaha = df['omset_usaha'].iloc[-1]
-    usia_targetpelanggan = df['usia_targetpelanggan'].iloc[-1]
-    gender_targetpelanggan = df['gender_targetpelanggan'].iloc[-1]
-    pekerjaan_targetpelanggan = df['pekerjaan_targetpelanggan'].iloc[-1]
-    status_targetpelanggan = df['status_targetpelanggan'].iloc[-1]
-    jenis_lokasi = df['jenis_lokasi_'].iloc[-1]
-
-    # skala_usaha = df.loc[df['user_id'] == '95020165', 'skala_usaha'].iloc[0]
-    # modal_usaha = df.loc[df['user_id'] == '95020165', 'modal_usaha'].iloc[0]
-    # bidang_usaha = df.loc[df['user_id'] == '95020165', 'bidang_usaha'].iloc[0]
-    # omset_usaha = df.loc[df['user_id'] == '95020165', 'omset_usaha'].iloc[0]
-    # usia_targetpelanggan = df.loc[df['user_id'] == '95020165', 'usia_targetpelanggan'].iloc[0]
-    # gender_targetpelanggan = df.loc[df['user_id'] == '95020165', 'gender_targetpelanggan'].iloc[0]
-    # pekerjaan_targetpelanggan = df.loc[df['user_id'] == '95020165', 'pekerjaan_targetpelanggan'].iloc[0]
-    # status_targetpelanggan = df.loc[df['user_id'] == '95020165', 'status_targetpelanggan'].iloc[0]
-    # jenis_lokasi = df.loc[df['user_id'] == '95020165', 'jenis_lokasi_'].iloc[0]
-
-    # Eksekusi query dan temukan dokumen yang cocok
-    # query_ref = collection_ref.where('user_id', '==', 'nan').where('jenis_usaha', '==', 'Nan=N')
-    query_ref = collection_ref.where('skala_usaha', '==', skala_usaha).where('modal_usaha', '==', modal_usaha).where('bidang_usaha', '==', bidang_usaha).where('omset_usaha', '==', omset_usaha).where('usia_targetpelanggan', '==', usia_targetpelanggan).where('gender_targetpelanggan', '==', gender_targetpelanggan).where('pekerjaan_targetpelanggan', '==', pekerjaan_targetpelanggan).where('status_targetpelanggan', '==', status_targetpelanggan).where('jenis_lokasi_', '==', jenis_lokasi)
-    docs = query_ref.stream()
-
-
-
-    doc_id = []
-    for doc in docs:
-        # Dapatkan ID dokumen yang cocok
-        doc_id = doc.id
-        # Mencetak daftar ID dokumen
-    return str(doc_id).replace("[","").replace("]","").replace("'","")
+    # Known data items
+    # user_id = df.loc[df['user_id'].isna(), 'user_id'].iloc[-1]
+    # jenis_usaha = df.loc[df['user_id'].isna(), 'jenis_usaha'].iloc[-1]
+    skala_usaha = df.loc[df['user_id'] == "", 'skala_usaha'].values[0]
+    modal_usaha = df.loc[df['user_id'] == "", 'modal_usaha'].values[0]
+    bidang_usaha = df.loc[df['user_id'] == "", 'bidang_usaha'].values[0]
+    omset_usaha = df.loc[df['user_id'] == "", 'omset_usaha'].values[0]
+    usia_targetpelanggan = df.loc[df['user_id'] == "", 'usia_targetpelanggan'].values[0]
+    gender_targetpelanggan = df.loc[df['user_id'] == "", 'gender_targetpelanggan'].values[0]
+    pekerjaan_targetpelanggan = df.loc[df['user_id'] == "", 'pekerjaan_targetpelanggan'].values[0]
+    status_targetpelanggan = df.loc[df['user_id'] == "", 'status_targetpelanggan'].values[0]
+    jenis_lokasi = df.loc[df['user_id'] == "", 'jenis_lokasi_'].values[0]
+    user_id = df.loc[df['user_id'] == "", 'user_id'].values[0]
+    jenis_usaha = df.loc[df['user_id'] == "", 'jenis_usaha'].values[0]
     
-    # doc_ids = []
-    # for doc in docs:
-        # Dapatkan ID dokumen yang cocok
-        # doc_ids.append(doc.id)
+    # Execute the query and find matching documents
+    query_ref = collection_ref.where('user_id', '==', user_id).where('jenis_usaha', '==', jenis_usaha).where('skala_usaha', '==', skala_usaha).where('modal_usaha', '==', modal_usaha).where('bidang_usaha', '==', bidang_usaha).where('omset_usaha', '==', omset_usaha).where('usia_targetpelanggan', '==', usia_targetpelanggan).where('gender_targetpelanggan', '==', gender_targetpelanggan).where('pekerjaan_targetpelanggan', '==', pekerjaan_targetpelanggan).where('status_targetpelanggan', '==', status_targetpelanggan).where('jenis_lokasi_', '==', jenis_lokasi)
 
-    # if doc_ids:
-        # return doc_ids[0]
-    # else:
-        # return None
+    doc_ids = []
+    for doc in query_ref.stream():
+        # Get the ID of each matching document
+        doc_ids.insert(0, doc.id)  # Insert the new ID at the beginning of the list
+
+    return doc_ids
+
+
+# Call the function and capture the returned value
+returned_doc_ids = to_getID()
+
+# Print the first document ID
+if len(returned_doc_ids) > 0:
+    print(returned_doc_ids[0])
+else:
+    print("No matching documents found.")
+
+
+# In[116]:
 
 def pushtoFireStore(): 
-    get_id = to_getID()
+    get_id = str(to_getID()).replace("]","").replace("[","").replace("'","")
     if get_id is not None: 
         get_id = get_id.rstrip("/")
         collection_ref1 = db.collection("users")
@@ -344,7 +336,7 @@ df
 # In[10]:
 
 
-cekid = new_df[new_df['user_id'] == 'NaN']
+cekid = new_df[new_df['user_id'] == '']
 result = getRecommendation(cekid)
 
 
@@ -372,7 +364,7 @@ def root():
 def get_recommendation():
     global df, new_df, users
     df, new_df, users = extract_DF_from_firestore()
-    cekid = new_df[new_df['user_id'] == 'nan']
+    cekid = new_df[new_df['user_id'] == '']
     result = getRecommendation(cekid)
     pushtoFireStore()
     json_recommendations = json.dumps(result) 
