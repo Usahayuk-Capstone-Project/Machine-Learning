@@ -1,5 +1,5 @@
 # Recommender System Implementation of Tensorflow and Scikit Learn
-1. The model adapted from [https://www.kaggle.com/code/sagarbapodara/coursera-course-recommendation-system-webapp]
+1. The model adapted from [Kaggle-Recommendation-System] (https://www.kaggle.com/code/sagarbapodara/coursera-course-recommendation-system-webapp)
 2. Here is our dataset [https://github.com/Usahayuk-Capstone-Project/Machine-Learning/blob/main/data_usaha.csv]
 
 Recommender systems is used in our applications to provide personalized recommendations to users. Two common approaches used in recommender systems are content-based filtering and collaborative filtering. In this project we are using Content-Based Filtering, because its focuses on the attributes or characteristics of the items being recommended. It recommends items to users based on their preferences for certain item features. The system analyzes the content or metadata of the items, in their input data (text), and matches them with the user's preferences. 
